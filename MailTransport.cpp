@@ -29,7 +29,6 @@ void readFromSocket(SocketType& socket) {
   std::string response(buffer.begin(), buffer.end());
 
   std::cout << response << '\n';
-  //    return std::stoi(std::string(buffer.begin(), buffer.begin()+3));
 }
 
 
@@ -60,17 +59,6 @@ void MailTransport::handle(SocketType& socket) {
   readFromSocket(tlsSocket);
   writeToSocket(tlsSocket, "DATA");
   readFromSocket(tlsSocket);
-  //    writeToSocket(tlsSocket,"MIME-Version: 1.0"
-  //                  "Subject: Test message"
-  //                  "From: Senior Tester <jasper@trygot.com>"
-  //                  "Content-Type: text/html; charset=\"UTF-8\""
-  //                  "Content-Transfer-Encoding: quoted-printable"
-  //                  "To: developerjasper@gmail.com>"
-  //                  "<b>Cool email body</b>"
-  //                  ""
-  //                  "."
-  //                  );
-
   writeToSocket(
       tlsSocket,
       "MIME-Version: 1.0\r\nSubject: TEST EMAIL\r\nFrom: Jasper "
