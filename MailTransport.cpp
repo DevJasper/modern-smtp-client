@@ -32,17 +32,6 @@ void readFromSocket(SocketType& socket) {
   //    return std::stoi(std::string(buffer.begin(), buffer.begin()+3));
 }
 
-//
-//void readFromSocket(TLSSocket& socket) {
-//  std::vector<char> buffer;
-//  buffer.reserve(1024);
-//
-//  socket.read(buffer);
-//  std::string response(buffer.begin(), buffer.end());
-//
-//  std::cout << response << '\n';
-//  //    return std::stoi(std::string(buffer.begin(), buffer.begin()+3));
-//}
 
 template <class SocketType>
 void writeToSocket(SocketType& socket, std::string&& buffer) {
@@ -50,10 +39,6 @@ void writeToSocket(SocketType& socket, std::string&& buffer) {
   std::cout << buffer << '\n';
 }
 
-//void writeToSocket(TLSSocket& socket, std::string&& buffer) {
-//  socket.write(buffer + "\r\n");
-//  std::cout << buffer << '\n';
-//}
 
 MailTransport::MailTransport() { res_init(); }
 
