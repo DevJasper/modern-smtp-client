@@ -11,18 +11,18 @@
 #include <string>
 #include <vector>
 
-#include "TLSSocket.hpp"
 #include "Socket.hpp"
+#include "TLSSocket.hpp"
 
-class MailTransport{
-public:
-    explicit MailTransport();
-    void send();
-private:
-    [[nodiscard]]std::vector<std::string> resolveMXRecords(const std::string&);
-    void handle(Socket&);
-//    void handle(TLSSocket&);
-    
+class MailTransport {
+ public:
+  explicit MailTransport();
+  void send();
+
+ private:
+  [[nodiscard]] std::vector<std::string> resolveMXRecords(const std::string&);
+    template<class SocketType>
+  void handle(SocketType&);
 };
 
 #endif /* MailTransport_hpp */

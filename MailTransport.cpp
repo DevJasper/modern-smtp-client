@@ -19,7 +19,9 @@
 
 #include "SocketAddress.hpp"
 
-void readFromSocket(Socket& socket) {
+
+template <class SocketType>
+void readFromSocket(SocketType& socket) {
   std::vector<char> buffer;
   buffer.reserve(1024);
 
@@ -30,30 +32,33 @@ void readFromSocket(Socket& socket) {
   //    return std::stoi(std::string(buffer.begin(), buffer.begin()+3));
 }
 
-void readFromSocket(TLSSocket& socket) {
-  std::vector<char> buffer;
-  buffer.reserve(1024);
+//
+//void readFromSocket(TLSSocket& socket) {
+//  std::vector<char> buffer;
+//  buffer.reserve(1024);
+//
+//  socket.read(buffer);
+//  std::string response(buffer.begin(), buffer.end());
+//
+//  std::cout << response << '\n';
+//  //    return std::stoi(std::string(buffer.begin(), buffer.begin()+3));
+//}
 
-  socket.read(buffer);
-  std::string response(buffer.begin(), buffer.end());
-
-  std::cout << response << '\n';
-  //    return std::stoi(std::string(buffer.begin(), buffer.begin()+3));
-}
-
-void writeToSocket(Socket& socket, std::string&& buffer) {
+template <class SocketType>
+void writeToSocket(SocketType& socket, std::string&& buffer) {
   socket.write(buffer + "\r\n");
   std::cout << buffer << '\n';
 }
 
-void writeToSocket(TLSSocket& socket, std::string&& buffer) {
-  socket.write(buffer + "\r\n");
-  std::cout << buffer << '\n';
-}
+//void writeToSocket(TLSSocket& socket, std::string&& buffer) {
+//  socket.write(buffer + "\r\n");
+//  std::cout << buffer << '\n';
+//}
 
 MailTransport::MailTransport() { res_init(); }
 
-void MailTransport::handle(Socket& socket) {
+template<class SocketType>
+void MailTransport::handle(SocketType& socket) {
   //    int statusCode;
 
   readFromSocket(socket);
@@ -146,7 +151,6 @@ std::vector<std::string> MailTransport::resolveMXRecords(
 }
 
 void MailTransport::send() {
-
   std::string host = "gmail.com";
 
   auto records = resolveMXRecords(host);
@@ -154,13 +158,12 @@ void MailTransport::send() {
   if (records.size() == 0)
     throw std::runtime_error("Failed to resolve MX records for " + host);
 
-  Socket socket;
+    Socket socket;
 
   for (const auto& record : records) {
-      std::cout << record << '\n';
+    std::cout << record << '\n';
     SocketAddress address{.host = record, .port = 25};
     socket.connect(address);
-      
 
     if (socket.isConnected()) break;
   }

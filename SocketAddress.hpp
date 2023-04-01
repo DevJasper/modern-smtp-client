@@ -8,11 +8,11 @@
 #ifndef SocketAddress_hpp
 #define SocketAddress_hpp
 
-#include<string>
+#include <string>
 
-struct SocketAddress{
-    std::string host;
-    int port;
+struct SocketAddress {
+  std::string host;
+  int port;
 };
 
 #endif /* SocketAddress_hpp */
